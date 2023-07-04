@@ -7,7 +7,7 @@
 
 fx_version 'bodacious'
 game 'gta5'
-
+lua54 'yes'
 author 'Golf, Tazio'
 description 'King of The Hill Framework'
 version '0.0.1'
@@ -21,6 +21,9 @@ client_scripts {
     'config.lua',
     'Client/*.lua'
 }
+
+--oxlib shit XD
+shared_script '@ox_lib/init.lua'
 
 server_scripts {
     '@mysql-async/lib/MySQL.lua',
