@@ -46,10 +46,23 @@ function near(player, x, y, z)
     end
 end
 
+text = nil
 function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+    if text == str then
+        Wait(4000)
+        lib.hideTextUI()
+        text = nil
+else
+lib.showTextUI(str, {
+    position = "right-center",
+    style = {
+        borderRadius = 0,
+        backgroundColor = '#48BB78',
+        color = 'white'
+    }
+})
+text = str
+end
 end
 
 function dump(o)

@@ -106,13 +106,13 @@ AddEventHandler("koth:renderClass", function(team)
                             items = {
                                 {
                                     label = "Rent",
-                                    description = "Rent for ~y~" .. Config.Money.Currency .. rent.price,
+                                    description = "Rent for " .. Config.Money.Currency .. rent.price,
                                     type = "button",
                                     select = "koth:buyWeapon",
                                     disabled = rent.disabled
                                 }, {
                                     label = "Buy",
-                                    description = "Buy for ~y~" .. Config.Money.Currency .. buy.price,
+                                    description = "Buy for " .. Config.Money.Currency .. buy.price,
                                     type = "button",
                                     select = "koth:buyWeapon"
                                 }
@@ -211,7 +211,7 @@ AddEventHandler("koth:renderClass", function(team)
 
         local arr = {
             label = weaponHash[table.find(weaponHash, item.weapon)-1],
-            description = "Slide for more ammo, press ~y~Enter~s~ to buy",
+            description = "Slide for more ammo, press Enter to buy",
             type = "slider",
             min = 0,
             max = 10,
@@ -304,7 +304,7 @@ AddEventHandler("koth:buyWeapon", function(menu, choice, oldValue, newValue)
             TriggerClientEvent("koth:ToggleWeapon", src, weapon, bullets, equip)
             player.Weapons:add(weapon)
         else
-            TriggerClientEvent("koth:notification", src, "~r~You don't have enough money")
+            TriggerClientEvent("koth:notification", src, "You don't have enough money")
         end
     end
 end)
@@ -333,9 +333,9 @@ AddEventHandler("koth:buyAmmo", function(menu, item, oldValue, newValue)
     if player.Money.cash >= price then
         player.Money:remove(price)
         TriggerClientEvent("koth:addAmmo", src, weapon, value)
-        TriggerClientEvent("koth:notification", src, "~g~Added " .. value .. " ammo")
+        TriggerClientEvent("koth:notification", src, "Added " .. value .. " ammo")
     else
-        TriggerClientEvent("koth:notification", src, "~r~You don't have enough money")
+        TriggerClientEvent("koth:notification", src, "You don't have enough money")
     end
 end)
 

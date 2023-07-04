@@ -32,9 +32,14 @@ Citizen.CreateThread(function()
                     elseif IsControlJustPressed(1, keys[menuInfo.keys.close]) then
                         if(menuInfo.freezePlayer) then FreezeEntityPosition(PlayerPedId(), false) end
                         open = false
+                        DisplayHelpText(menuInfo.helpMessage)
                     end
                 else
+                    if open == true then
+                        lib.hideTextUI()
+                    end
                     open = false
+                    Wait(300)
                 end
             end
         end
@@ -71,26 +76,68 @@ AddEventHandler("koth:addAmmo", function(type, amount)
 end)
 
 AddEventHandler("koth:spawnPed", function(ped, arr)
-    local x = arr.x + .0 or nil
-    local y = arr.y + .0 or nil
-    local z = arr.z + .0 or GetHeightmapBottomZForPosition(x, y) + 3 or nil
-    local r = arr.rotation or 30
+    -- local x = arr.x + .0 or nil
+    -- local y = arr.y + .0 or nil
+    -- local z = arr.z + .0 or GetHeightmapBottomZForPosition(x, y) + 3 or nil
+    -- local r = arr.rotation or 30
 
-    RequestModel(GetHashKey(ped))
+    -- RequestModel(GetHashKey(ped))
 
-    while not HasModelLoaded(GetHashKey(ped)) do
-        Citizen.Wait(1)
-    end
+    -- while not HasModelLoaded(GetHashKey(ped)) do
+    --     Citizen.Wait(1)
+    -- end
 
-    local ped = CreatePed(4, GetHashKey(ped), x, y, z, r, true, true)
+    -- local ped = CreatePed(4, GetHashKey(ped), x, y, z, r, true, true)
 
-    SetBlockingOfNonTemporaryEvents(ped, true)
-    FreezeEntityPosition(ped, true)
-    SetEntityInvincible(ped, true)
+    -- SetBlockingOfNonTemporaryEvents(ped, true)
+    -- FreezeEntityPosition(ped, true)
+    -- SetEntityInvincible(ped, true)
 
-    if(arr.open ~= nil) then
-        table.insert(menus, arr)
-    end
+    -- if(arr.open ~= nil) then
+    --     table.insert(menus, arr)
+    -- end
+
+    -- koth:renderClass
+    -- koth:renderVehicles
+print(json.encode(arr))
+
+    -- function BasicStuffs()
+    --     local NPC = { x = -31.243, y = -1097.88, z = 26.274, rotation = 63.79243, NetworkSync = true}
+    --     function createNPC()
+    --     created_ped = CreatePed(0, modelHash , NPC.x,NPC.y,NPC.z, NPC.rotation, true)
+    --     FreezeEntityPosition(created_ped, true)
+    --     SetEntityInvincible(created_ped, true)
+    --     SetBlockingOfNonTemporaryEvents(created_ped, true)
+    --     TaskStartScenarioInPlace(created_ped, "WORLD_HUMAN_GUARD_STAND_CASINO", 0, true)
+    --     end
+      
+    --     Citizen.CreateThread(function()
+    --       modelHash = GetHashKey("u_m_m_bankman")
+    --       RequestModel(modelHash)
+    --       while not HasModelLoaded(modelHash) do
+    --            Wait(1)
+    --       end
+    --       createNPC() 
+    --     end)
+      
+    --     exports.ox_target:addBoxZone({
+    --       coords = vec3(NPC.x,NPC.y,NPC.z + 1),
+    --       size = vec3(1, 1, 2),
+    --       rotation = NPC.rotation,
+    --       debug = false,
+    --       options = {
+    --         {
+    --             name = 'carshop',
+    --             icon = 'fas fa-car',
+    --             label = 'Oepn classes',
+    --             onSelect = function()
+    --                 TriggerEvent('np-showrooms:enterExperience')
+    --             end,
+    --             distance = 1.9,
+    --         },
+    --         }
+    --     })
+    --   end
 end)
 
 AddEventHandler("koth:inMenu", function()

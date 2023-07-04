@@ -93,6 +93,8 @@ CreateThread(function()
             icon = 'fa-solid fa-gun',
             onSelect = function()
                 ExecuteCommand('team red')
+                -- Wait(5000)
+                -- DoScreenFadeOut(1000)
             end
         }, {
             title = 'Green Team',
@@ -100,6 +102,8 @@ CreateThread(function()
             icon = 'fa-solid fa-gun',
             onSelect = function()
                 ExecuteCommand('team green')
+                -- Wait(5000)
+                -- DoScreenFadeOut(1000)
             end
         }, {
             title = 'Blue Team',
@@ -107,8 +111,11 @@ CreateThread(function()
             icon = 'fa-solid fa-gun',
             onSelect = function()
                 ExecuteCommand('team blue')
+                -- Wait(5000)
+                -- DoScreenFadeOut(1000)
             end
         }}
     })
+    DoScreenFadeOut(0)
     lib.showContext('join_menu')
 end)

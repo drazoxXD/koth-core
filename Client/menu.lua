@@ -85,7 +85,7 @@ function render(menu, arr, list)
             for _,v in pairs(list) do
                 if v == item then
                     local e = arr[i]
-                    if e == nil then return TriggerEvent("koth:notification", "~r~This menu item isn't found") end
+                    if e == nil then return TriggerEvent("koth:notification", "This menu item isn't found") end
                     if e.select == nil then return false end
                     if type(e.select) == "table" then e.select(menu, item)
                     else TriggerServerEvent(e.select, menu, item) end
