@@ -1,6 +1,7 @@
 local open = false
 local menus = {}
 
+
 Citizen.CreateThread(function()
     TriggerEvent("koth:_getWeapons")
     SetEveryoneIgnorePlayer(GetPlayerPed(-1), true) -- Police ignore player
@@ -15,31 +16,47 @@ Citizen.CreateThread(function()
             local menuInfo = v.open
             local x = team.x + .0 or nil
             local y = team.y + .0 or nil
-            local z = team.z + .0 or GetHeightmapBottomZForPosition(x, y) + 3 or nil
+            local z = team.z + .0 or GetHeightmapBottomZForPosition(x, y) + 2 or nil
 
             if x ~= nil or y ~= nil or z ~= nil then
                 if near(GetPlayerPed(-1), x, y, z) then
-                    DisplayHelpText(menuInfo.helpMessage)
+                    -- DisplayHelpText(menuInfo.helpMessage)
+                    --print('asd')
+                    -- if IsControlJustPressed(0, 38) then
+                    --     if(menuInfo.ClientTrigger) then TriggerEvent(menuInfo.ClientTrigger) end
+                    --     if menuInfo.teamLimit then limit = menuInfo.team  else limit = nil end
+                    --     TriggerServerEvent(menuInfo.serverTrigger, limit)
+                    --     if(menuInfo.freezePlayer) then FreezeEntityPosition(PlayerPedId(), true) end
 
-                    if IsControlJustPressed(1, keys[menuInfo.keys.open]) and not open then
+                    --     open = true
+                    -- elseif IsControlJustPressed(1, keys[menuInfo.keys.close]) then
+                    --     if(menuInfo.freezePlayer) then FreezeEntityPosition(PlayerPedId(), false) end
+                    --     open = false
+                    --     DisplayHelpText(menuInfo.helpMessage)
+                    -- end
+                    --DisplayHelpText(menuInfo.helpMessage)
+                    lib.showTextUI(menuInfo.helpMessage, {
+                        position = "right-center",
+                        style = {
+                            borderRadius = 0,
+                            backgroundColor = '#48BB78',
+                            color = 'white'
+                        }
+                    })
+                    if IsControlJustPressed(0, 38) then
+                        --print('asdasdasdasdasd')
                         if(menuInfo.ClientTrigger) then TriggerEvent(menuInfo.ClientTrigger) end
+                        print('1')
                         if menuInfo.teamLimit then limit = menuInfo.team  else limit = nil end
-
+                        print('2')
                         TriggerServerEvent(menuInfo.serverTrigger, limit)
-                        if(menuInfo.freezePlayer) then FreezeEntityPosition(PlayerPedId(), true) end
-
-                        open = true
-                    elseif IsControlJustPressed(1, keys[menuInfo.keys.close]) then
-                        if(menuInfo.freezePlayer) then FreezeEntityPosition(PlayerPedId(), false) end
-                        open = false
-                        DisplayHelpText(menuInfo.helpMessage)
+                        print('3')
+                        lib.hideTextUI()
+                        --if(menuInfo.freezePlayer) then FreezeEntityPosition(PlayerPedId(), false) end
+                        --print('4')
                     end
                 else
-                    if open == true then
-                        lib.hideTextUI()
-                    end
-                    open = false
-                    Wait(300)
+                    lib.hideTextUI()
                 end
             end
         end
@@ -76,26 +93,41 @@ AddEventHandler("koth:addAmmo", function(type, amount)
 end)
 
 AddEventHandler("koth:spawnPed", function(ped, arr)
-    -- local x = arr.x + .0 or nil
-    -- local y = arr.y + .0 or nil
-    -- local z = arr.z + .0 or GetHeightmapBottomZForPosition(x, y) + 3 or nil
-    -- local r = arr.rotation or 30
+    local x = arr.x + .0 or nil
+    local y = arr.y + .0 or nil
+    local z = arr.z + .0 or GetHeightmapBottomZForPosition(x, y) + 3 or nil
+    local r = arr.rotation or 30
 
-    -- RequestModel(GetHashKey(ped))
+    RequestModel(GetHashKey(ped))
 
-    -- while not HasModelLoaded(GetHashKey(ped)) do
-    --     Citizen.Wait(1)
-    -- end
+    while not HasModelLoaded(GetHashKey(ped)) do
+        Citizen.Wait(1)
+    end
 
-    -- local ped = CreatePed(4, GetHashKey(ped), x, y, z, r, true, true)
+    local ped = CreatePed(4, GetHashKey(ped), x, y, z, r, true, true)
 
-    -- SetBlockingOfNonTemporaryEvents(ped, true)
-    -- FreezeEntityPosition(ped, true)
-    -- SetEntityInvincible(ped, true)
-
-    -- if(arr.open ~= nil) then
-    --     table.insert(menus, arr)
-    -- end
+    SetBlockingOfNonTemporaryEvents(ped, true)
+    FreezeEntityPosition(ped, true)
+    SetEntityInvincible(ped, true)
+    -- exports.ox_target:addLocalEntity(ped, {
+    --     {
+    --         name = 'asdas',
+    --         icon = 'fa-solid fa-hand-holding-medical',
+    --         label = locale('revive_label'),
+    --         distance = 1.5,
+    --         onSelect = function(data)
+    --             local ReviveChance = math.random(1, 100)
+    --             TriggerServerEvent('lss-ambulance:server:PlayerAnimation',
+    --                 GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity)), GetEntityHeading(cache.ped),
+    --                 GetEntityCoords(cache.ped), GetEntityForwardVector(cache.ped), ReviveChance)
+    --             TriggerEvent('lss-ambulance:client:AmbulanceAnimation', GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity)),
+    --                 ReviveChance)
+    --         end
+    --     },
+    -- })
+    if(arr.open ~= nil) then
+        table.insert(menus, arr)
+    end
 
     -- koth:renderClass
     -- koth:renderVehicles
