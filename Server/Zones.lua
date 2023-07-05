@@ -147,3 +147,9 @@ AddEventHandler('onResourceStop', function(resourceName)
         end
     end
 end)
+
+
+AddEventHandler("koth:join", function()
+    print('[JOIN:npc]: ' ..source.. ' ID joined 0 dimension! All npc spawn have been turned off for him!')
+    SetRoutingBucketPopulationEnabled(0, false)
+end)

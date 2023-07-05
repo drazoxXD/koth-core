@@ -117,5 +117,6 @@ CreateThread(function()
         }}
     })
     DoScreenFadeOut(0)
+    TriggerServerEvent('koth:join')
     lib.showContext('join_menu')
 end)
